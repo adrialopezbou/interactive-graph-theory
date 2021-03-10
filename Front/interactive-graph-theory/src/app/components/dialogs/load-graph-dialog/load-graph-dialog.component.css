@@ -1,0 +1,22 @@
+.list-container {
+    display: flex;
+    align-items: center;
+    margin: 5px 0px 5px 0px;
+}
+
+.graph-button {
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+.delete-button {
+    display: flex;
+    background-color:red;
+    border: 1px solid gray;
+    width: 35px!important;
+    min-width: unset!important;
+    height: 35px;
+    margin-left: 5px;
+    border-radius: 5px;
+    justify-content: center;
+}

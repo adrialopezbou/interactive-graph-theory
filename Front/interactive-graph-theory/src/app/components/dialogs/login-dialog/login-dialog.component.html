@@ -1,0 +1,21 @@
+<div class="dialog-container">
+    <h1 mat-dialog-title>Log In</h1>
+    <div mat-dialog-content class="content-container">
+        <form class="form" [formGroup]="form" >
+            <mat-form-field>
+                <mat-label>Username</mat-label>
+                <input type="text" matInput formControlName="username">
+                <mat-error *ngIf="usernameField.invalid && usernameField.touched">You must enter a username</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input type="password" matInput formControlName="password">
+                <mat-error *ngIf="passwordField.invalid && passwordField.touched">You must enter a password</mat-error>
+            </mat-form-field>
+            <div mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Cancel</button>
+            <button mat-button [disabled]="form.invalid" (click)="onSubmit()">Log In</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+<div class="log-in-container">
+    <div class="log-in-buttons">
+        <mat-card *ngIf="logged" class="user-info">
+            <h3>{{getUsername()}}</h3>
+            <button (click)="logOut()" class="log-out-button" mat-raised-button color="primary">Log Out</button>
+        </mat-card>
+        <div *ngIf="!logged" >
+            <button (click)="openSigninDialog()" mat-raised-button color="primary">Sign In</button>
+            <button (click)="openLoginDialog()" mat-raised-button color="primary">Log In</button>
+        </div>
+    </div>
+</div>
+<div class="main-container">
+    <div class="left-container">
+        <div class="title">
+            <!-- <ngx-slick-carousel class="carousel"
+            #slickModal="slick-carousel" 
+            [config]="slideConfig"
+            (init)="slickInit($event)"
+            (breakpoint)="breakpoint($event)"
+            (afterChange)="afterChange($event)"
+            (beforeChange)="beforeChange($event)">
+                <div ngxSlickItem  *ngFor="let slide of slides" class="slide">
+                    <img src="{{ slide.img }}" alt="" width="100%">
+                </div>
+            </ngx-slick-carousel> -->
+    
+            <!-- <button (click)="addSlide()">Add</button>
+            <button (click)="removeSlide()">Remove</button>
+            <button (click)="slickModal.slickGoTo(2)">slickGoto 2</button>
+            <button (click)="slickModal.unslick()">unslick</button> -->
+            <img src="../../../assets/images/title.png" alt="title">
+        </div>
+        <div class="graph-selector">
+            <mat-card class="graph-selector-options">
+                <div class="new-load-container">
+                    <button (click)="openNewGraphDialog()" mat-raised-button color="primary">New Graph</button>
+                    <button (click)="openLoadGraphDialog()" mat-raised-button color="primary">Load Graph</button>
+                </div>
+                <div class="save-list-container">
+                    <div>
+                        <button (click)="openSaveGraphDialog()" class="save-button" mat-raised-button color="primary">Save Graph</button>
+                    </div>
+                    <div>
+                        <mat-form-field class="algth-list" appearance="fill">
+                            <mat-label>Algorithm</mat-label>
+                            <mat-select [disabled]="!configSelected" [(ngModel)]="algthSelected">
+                              <mat-option *ngFor="let algth of algthList" [value]="algth.value">
+                                {{algth.viewValue}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </mat-card>
+            <div class="param-icon directed">
+                <img *ngIf="paramsConfig.directed" src="../../../assets/images/directed_true_icon.png" alt="Directed">
+                <img *ngIf="!paramsConfig.directed" src="../../../assets/images/directed_false_icon.png" alt="Directed">
+            </div>
+            <div class="param-icon weighted">
+                <img *ngIf="paramsConfig.weighted" src="../../../assets/images/weighted_true_icon.png" alt="Weighted">
+                <img *ngIf="!paramsConfig.weighted" src="../../../assets/images/weighted_false_icon.png" alt="Weighted">
+            </div>
+            <div class="param-icon binary">
+                <img *ngIf="paramsConfig.binaryTree" src="../../../assets/images/binary_true_icon.png" alt="Binary">
+                <img *ngIf="!paramsConfig.binaryTree" src="../../../assets/images/binary_false_icon.png" alt="Binary">
+            </div>
+        </div>
+        <div class="code-adjacency-container">
+            <mat-card class="pseudo-code-container">
+                <div *ngIf="algthSelected !== ''">
+                    <mat-card-title>Pseudo-Code</mat-card-title>
+                    <div class="code-container">
+                        <p *ngIf="algthSelected === 'dfs'">
+                            <span class="green-font"># Variables</span> <br>
+                            n <span class="green-font"># Number of nodes in the graph</span> <br>
+                            g <span class="green-font"># Adjacency list representing the graph</span> <br>
+                            visited = [false, ..., false] <span class="green-font"># Size n</span> <br>
+                            root_node <span class="green-font"># Index of root node in the adjacency list</span> <br>
+                            <br>
+                            <span class="tab"></span><span class="blue-font">function </span><span class="yellow-font">dfs</span>(i): <br>
+                            <span class="tab"></span><span class="tab"></span><span class="blue-font">if</span> visited[i]: <span class="blue-font">return</span> <br>
+                            <span class="tab"></span><span class="tab"></span>visited[i] = true <br>
+                            <br>
+                            <span class="tab"></span><span class="tab"></span>neighbours = g[i] <br>
+                            <span class="tab"></span><span class="tab"></span><span class="blue-font">for</span> next <span class="blue-font">in</span> neighbours: <br>
+                            <span class="tab"></span><span class="tab"></span><span class="tab"></span>dfs(next) <br>
+                            <br>
+                            <span class="green-font">#Start DFS at root node </span> <br>
+                            <span class="yellow-font">dfs</span>(root_node)
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="algthSelected === ''">
+                    <mat-card-title>Pseudo-Code</mat-card-title>
+                    <div class="algh-not-selected-container">
+                        <h3>Select an algorithm to start.</h3>
+                    </div>
+                </div>
+        
+            </mat-card>
+            <mat-card class="adjacency-container">
+                <mat-card-title>Adjacency List</mat-card-title>
+                <div class="adjacency-list">
+                    <p class="adjacency-item" *ngFor="let item of adjacencyListData.adjacencyList; let i=index">{{i}} : 
+                        <span *ngFor="let con of item; let j=index">&#123; {{con.nodeId}}-{{con.cost}} &#125;
+                            <span *ngIf="j<item.length-1">, <br *ngIf="(j + 1) % 3 === 0"></span></span></p>
+                </div>
+                <p>Format &#x02192; id : &#123; node_id - cost &#125;</p>
+            </mat-card>
+        </div>
+        
+        
+    </div>
+
+    <div class="right-container">
+        <app-interactive-graph (adjacencyListEvent)="updateAdjacencyList($event)"></app-interactive-graph>
+    </div>
+</div>
+    
+

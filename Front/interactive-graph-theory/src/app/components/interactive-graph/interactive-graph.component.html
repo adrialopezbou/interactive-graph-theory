@@ -1,0 +1,29 @@
+<div class="sim-buttons-container">
+    <button *ngIf="!isPerformingSimulation" mat-raised-button color="primary" (click)="startSim()">Start Simulation</button>
+    <div class="active-sim-buttons" *ngIf="isPerformingSimulation">
+        <button mat-raised-button color="primary" style="font-size: 40px;" (click)="autoSim()">&#x025B8;</button>
+        <button mat-raised-button color="primary" style="font-size: 40px;" (click)="stopSim()">&#x025AA;</button>
+        <button mat-raised-button color="primary" style="font-size: 30px;" (click)="previousStep()">&lt;</button>
+        <button mat-raised-button color="primary" style="font-size: 30px;" (click)="nextStep()">&gt;</button>
+        
+    </div>
+    
+</div>
+
+<div id="boundary" class="boundary" (mouseup)="onClickBoundary($event)">
+    <!-- REVISAR DISABLE NODE HOVER, NO FUNCIONA! -->
+    <div *ngFor="let node of nodeList; let i=index;" id="{{'node' + i}}" 
+    [ngClass]="{'node': true, 'disable-node-hover': nodeConnectionInfo.isConnectingNodes, 'disable-node-hover': isPerformingSimulation, 'root-node': node.isRoot, 
+    'visited-node': nodeAnimationStatus[i] == 'visited', 'visiting-node': nodeAnimationStatus[i] == 'visiting'}"
+    (mouseup)="onNodeMouseUp(i)"
+    cdkDragBoundary=".boundary" cdkDrag (cdkDragMoved)="onDrag($event, i)" [cdkDragDisabled]="nodeConnectionInfo.isConnectingNodes">
+        {{loadInitialPosition(i)}}
+        <div style="font-weight: bold;">{{i}}</div>
+        <div class="node-options">
+            <button class="connect-option" (click)="startNewConnection(i)">Connect</button>
+            <button class="root-option" (click)="setAsRoot(i)">Root</button>
+            <button class="delete-option" (click)="deleteNode(i)">Delete</button>
+        </div>
+    </div>
+    <app-graph-canvas class="connection-canvas" [nodeConnectionInfo]="nodeConnectionInfo" [nodeList]="nodeList" ></app-graph-canvas>
+</div>

@@ -1,0 +1,17 @@
+<div class="param-container">
+    <h1 mat-dialog-title>New Graph</h1>
+    <mat-button-toggle-group class="param-item" [(ngModel)]="direction" aria-label="Direction">
+        <mat-button-toggle value="undirected">Undirected</mat-button-toggle>
+        <mat-button-toggle value="directed">Directed</mat-button-toggle>
+    </mat-button-toggle-group>
+    <mat-button-toggle-group class="param-item" [(ngModel)]="weight" aria-label="Weight">
+        <mat-button-toggle value="unweighted">Unweighted</mat-button-toggle>
+        <mat-button-toggle value="weighted">Weighted</mat-button-toggle>
+    </mat-button-toggle-group>
+    <mat-button-toggle-group class="param-item" [(ngModel)]="connections" aria-label="Connections">
+        <mat-button-toggle value="none">No Restrictions</mat-button-toggle>
+        <mat-button-toggle value="binary">Binary Tree</mat-button-toggle>
+    </mat-button-toggle-group>
+    <button mat-raised-button (click)="onSubmit()" color="primary">Create</button>
+</div>
+

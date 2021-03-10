@@ -1,0 +1,18 @@
+.param-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.param-item {
+    display: flex;
+    margin: 5px;
+}
+
+.param-item mat-button-toggle {
+    flex-grow: 1;
+}
+
+.param-container button {
+    align-self: center;
+}

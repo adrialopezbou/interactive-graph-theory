@@ -1,0 +1,6 @@
+- Disable hovering buttons while dragging or making connection
+- Design BFS algth
+- Fix little offset on connection canvas(currentPos)
+- Enable intro for the dialog submision
+- Add connection cost to database and use it when getting the graph
+- Don't allow clicks on interactive panel while performing sim
