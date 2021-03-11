@@ -19,8 +19,8 @@
                 <mat-error *ngIf="passwordCompareField.value !== passwordField.value">The password doesn't match</mat-error>
             </mat-form-field>
             <div mat-dialog-actions>
-            <button mat-button (click)="onNoClick()">Cancel</button>
-            <button mat-button [disabled]="form.invalid || passwordCompareField.value !== passwordField.value" (click)="onSubmit()">Log In</button>
+                <button mat-button [disabled]="form.invalid || passwordCompareField.value !== passwordField.value" (click)="onSubmit()">Log In</button>
+                <button mat-button (click)="onNoClick()">Cancel</button>
             </div>
         </form>
     </div>

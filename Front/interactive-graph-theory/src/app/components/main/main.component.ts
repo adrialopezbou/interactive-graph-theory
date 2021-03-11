@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import * as $ from 'jquery'
 import * as slick from 'slick-carousel';
@@ -42,9 +42,17 @@ export class MainComponent implements OnInit {
 
   graphList = []
 
+  isPerformingAutoSim = false
+
   adjacencyListData = {
     adjacencyList : []
   }
+
+  visitedArray: any
+
+  bfsQueueOrder: any
+
+  bfsQueueCurrentList: number[] = []
 
   logged = false
 
@@ -143,7 +151,9 @@ export class MainComponent implements OnInit {
         this.paramsConfig.binaryTree = result.binaryTree
         this.configSelected = true 
         this.interactiveGraph.setNodeList([])
+        this.interactiveGraph.setIdCount(0)
         this.algthSelected = ''
+        this.adjacencyListData.adjacencyList = []
       }
     })
   }
@@ -198,7 +208,6 @@ export class MainComponent implements OnInit {
         }
       })
     }
-    
   }
 
   storeGraph() {
@@ -207,6 +216,51 @@ export class MainComponent implements OnInit {
 
   updateAdjacencyList(data: any): void {
     this.adjacencyListData = data
+    this.visitedArray = new Array(this.adjacencyListData.adjacencyList.length).fill(false)
+  }
+
+  updateVisitedArray(index: number): void {
+    if(this.visitedArray[index] === true) {
+      this.visitedArray[index] = false
+    } else {
+      this.visitedArray[index] = true
+    }
+  }
+
+  updateBfsQueue(step: number): void { // HACER ASYNC AQUI
+    this.bfsQueueSteps(step, 0);
+    this.delayedBfsQueueSteps(step)
+  }
+
+  bfsQueueSteps(step: number, i: number) {
+    let enqueue = this.bfsQueueOrder[step * 2 + i].enqueue
+    let id = this.bfsQueueOrder[step * 2 + i].id
+    if(enqueue) {
+      this.bfsQueueCurrentList.push(id)
+    } else {
+      console.log(this.bfsQueueCurrentList)
+      console.log(id)
+      this.bfsQueueCurrentList = this.bfsQueueCurrentList.filter(value => value !== id)
+      console.log(this.bfsQueueCurrentList)
+    }
+  }
+
+  delayedBfsQueueSteps(step: number): void {
+    (async () => {
+      await this.simStepTimeout(500)
+      this.bfsQueueSteps(step, 1)
+    })()
+        
+        
+  }
+
+  simStepTimeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
+
+  resetAnimationValues(): void {
+    this.visitedArray = new Array(this.adjacencyListData.adjacencyList.length).fill(false)
+    this.bfsQueueCurrentList = []
   }
 
   getUsername(): string {
@@ -216,6 +270,14 @@ export class MainComponent implements OnInit {
   logOut(): void {
     this.databaseService.setUserJwt('')
     this.logged = false
+  }
+
+  setQueueData(data: any): void{
+    this.bfsQueueOrder = data
+  }
+
+  setAutoSimulation(data: any): void {
+    this.isPerformingAutoSim = data
   }
   
   /* addSlide() {

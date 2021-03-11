@@ -8,8 +8,8 @@
                 <mat-error *ngIf="graphNameField.invalid && graphNameField.touched">You must enter a name</mat-error>
               </mat-form-field>
               <div mat-dialog-actions>
-                <button mat-button (click)="onNoClick()">Cancel</button>
                 <button mat-button [disabled]="form.invalid" (click)="onSubmit()">Save</button>
+                <button mat-button (click)="onNoClick()">Cancel</button>
               </div>
         </form>
     </div>

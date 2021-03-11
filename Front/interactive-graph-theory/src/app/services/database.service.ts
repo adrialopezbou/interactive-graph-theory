@@ -20,19 +20,19 @@ export class DatabaseService {
   }
 
   authenticate(username: string, password: string): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/authenticate', {username: username, password: password})
+    return this.http.post<any>('http://localhost:8083/authenticate', {username: username, password: password})
   }
 
   storeUser(username: any, password: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/store-user', {username: username, password: password})
+    return this.http.post<any>('http://localhost:8083/store-user', {username: username, password: password})
   }
 
   getGraph(id: number): Observable<any> {
-    return this.http.get<any>('http://localhost:8081/get-graph/' + id, {headers:{'Authorization': 'Bearer ' + this.userJwt.jwt}})
+    return this.http.get<any>('http://localhost:8083/get-graph/' + id, {headers:{'Authorization': 'Bearer ' + this.userJwt.jwt}})
   }
 
   getAllUserGraphs(): Observable<any> {
-    return this.http.get<any>('http://localhost:8081/get-graphs', {headers:{'Authorization': 'Bearer ' + this.userJwt.jwt}})
+    return this.http.get<any>('http://localhost:8083/get-graphs', {headers:{'Authorization': 'Bearer ' + this.userJwt.jwt}})
   }
 
   storeGraph(graphName: string, paramsConfig: any, nodeList: Node[]): void {
@@ -52,7 +52,7 @@ export class DatabaseService {
         }
         list.push(dto)
       }
-      this.http.post<any>('http://localhost:8081/store-graph', {
+      this.http.post<any>('http://localhost:8083/store-graph', {
         name: graphName,
         directed: paramsConfig.directed,
         weighted: paramsConfig.weighted,
@@ -66,7 +66,7 @@ export class DatabaseService {
   }
 
   deleteGraph(id: any): Observable<any> {
-    return this.http.delete<any>('http://localhost:8081/delete-graph/' + id, {headers:{'Authorization': 'Bearer ' + this.userJwt.jwt}})
+    return this.http.delete<any>('http://localhost:8083/delete-graph/' + id, {headers:{'Authorization': 'Bearer ' + this.userJwt.jwt}})
   }
 
   setUserJwt(jwt: string): void {

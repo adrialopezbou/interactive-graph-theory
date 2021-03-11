@@ -1,6 +1,7 @@
 package com.ironhack.interactivegraphtheory.nodesservice.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.List;
@@ -36,6 +37,7 @@ public class Node {
         this.id = id;
     }
 
+    @JsonProperty(value = "isRoot")
     public Boolean getRoot() {
         return isRoot;
     }

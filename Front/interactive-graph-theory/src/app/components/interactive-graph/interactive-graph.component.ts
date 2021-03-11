@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { CdkDrag, CdkDragMove } from '@angular/cdk/drag-drop';
 import { Node } from 'src/app/models/node'
 import { GlobalConstants } from '../../common/global-constants'
@@ -35,10 +35,25 @@ export class InteractiveGraphComponent implements OnInit {
   animationStep: number = 0
 
   @Input()
-  draggingPosition: any
+  algthSelected: string
 
   @Output()
   adjacencyListEvent = new EventEmitter()
+
+  @Output()
+  visitedArrayEvent = new EventEmitter()
+
+  @Output()
+  autoSimulationEvent = new EventEmitter()
+
+  @Output()
+  simulationStoppedEvent = new EventEmitter()
+
+  @Output()
+  bfsQueueDataEvent = new EventEmitter()
+
+  @Output()
+  bfsQueueUpdateEvent = new EventEmitter()
 
   constructor() { }
 
@@ -47,29 +62,54 @@ export class InteractiveGraphComponent implements OnInit {
     this.updateAdjacencyList()
   }
 
-  ngAfterViewInit(): void {}
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes.algthSelected && changes.algthSelected.currentValue) {
+      this.stopSim()
+    }
+  }
 
   startSim(): void {
     this.isPerformingSimulation = true
-    this.nodeAnimationOrder = NodeListConverter.transformToDfs(this.nodeList)
+    switch(this.algthSelected) {
+      case 'dfs': {
+        this.nodeAnimationOrder = NodeListConverter.transformToDfs(this.nodeList)
+        break
+      }
+      case 'bfs': {
+        let result = NodeListConverter.transformToBfs(this.nodeList)
+        this.nodeAnimationOrder = result.nodeOrder
+        console.log(result)
+        this.bfsQueueDataEvent.emit(result.queueOrder)
+        break
+      }
+    }
     this.nodeAnimationStatus = new Array(this.nodeList.length).fill('')
     let id = this.nodeAnimationOrder[this.animationStep]
     let index = this.findNodeIndexById(id, this.nodeList)
     this.nodeAnimationStatus[index] = 'visiting'
+    this.visitedArrayEvent.emit(index)
   }
 
   autoSim(): void {
-    this.isPerformingAutoSim = true;
+    this.isPerformingAutoSim = true
+    this.animationStep = 0
+    this.nodeAnimationStatus = new Array(this.nodeList.length).fill('')
+    let id = this.nodeAnimationOrder[this.animationStep]
+    let index = this.findNodeIndexById(id, this.nodeList)
+    this.nodeAnimationStatus[index] = 'visiting'
+    this.simulationStoppedEvent.emit()
+    this.visitedArrayEvent.emit(index)
+    this.bfsQueueUpdateEvent.emit(0)
+    this.autoSimulationEvent.emit(true);
 
     (async () => {
-      for (let i=0; i<this.nodeAnimationStatus.length; i++) {
+      for (let i=0; i<this.nodeAnimationOrder.length; i++) {
         await simStepTimeout(1000)
         if(this.isPerformingAutoSim) {
           this.nextAnimationState()
         } else {
           break;
         }
-        
       }
     })()
 
@@ -78,18 +118,19 @@ export class InteractiveGraphComponent implements OnInit {
     }
   }
 
-  
-
   stopSim(): void {
     this.isPerformingSimulation = false
     this.isPerformingAutoSim = false
     this.nodeAnimationStatus = []
     this.animationStep = 0
+    this.simulationStoppedEvent.emit()
+    this.autoSimulationEvent.emit(false)
   }
 
   previousStep(): void {
     if(this.isPerformingAutoSim){
       this.isPerformingAutoSim = false
+      this.autoSimulationEvent.emit(false)
     }
     this.previousAnimationState()
   }
@@ -106,14 +147,18 @@ export class InteractiveGraphComponent implements OnInit {
         this.nodeAnimationStatus[previousIndex] = 'visited'
       } else {
         this.nodeAnimationStatus[previousIndex] = ''
+        this.visitedArrayEvent.emit(previousIndex)
       }
-      
+      if(this.algthSelected === 'bfs') {
+        this.bfsQueueUpdateEvent.emit(this.animationStep)
+      }
     }
   }
 
   nextStep(): void {
     if(this.isPerformingAutoSim){
       this.isPerformingAutoSim = false
+      this.autoSimulationEvent.emit(false)
     }
     this.nextAnimationState()
   }
@@ -123,10 +168,18 @@ export class InteractiveGraphComponent implements OnInit {
       this.animationStep++
       let id = this.nodeAnimationOrder[this.animationStep]
       let index = this.findNodeIndexById(id, this.nodeList)
+      if(this.nodeAnimationStatus[index] === '') {
+        this.visitedArrayEvent.emit(id)
+      }
       this.nodeAnimationStatus[index] = 'visiting'
       let previousId = this.nodeAnimationOrder[this.animationStep - 1]
       let previousIndex = this.findNodeIndexById(previousId, this.nodeList)
-      this.nodeAnimationStatus[previousIndex] = 'visited' 
+      this.nodeAnimationStatus[previousIndex] = 'visited'
+      if(this.algthSelected === 'bfs') {
+        this.bfsQueueUpdateEvent.emit(this.animationStep)
+      }
+    } else {
+      this.autoSimulationEvent.emit(false)
     }
   }
 
@@ -156,18 +209,20 @@ export class InteractiveGraphComponent implements OnInit {
       }
       this.connectionCanvas.stopNodeConnection()
     } else { //New node created
-      if(event.button === 0) {
-        let elementClickedId: string = (event.target as Element).id
-        if(elementClickedId === 'boundary') {
-          let boundaryEl = document.getElementById('boundary').getBoundingClientRect()
-          let firstNode = false
-          if(this.nodeList.length === 0) {
-            firstNode = true
+      if(!this.isPerformingSimulation) {
+        if(event.button === 0) {
+          let elementClickedId: string = (event.target as Element).id
+          if(elementClickedId === 'boundary') {
+            let boundaryEl = document.getElementById('boundary').getBoundingClientRect()
+            let firstNode = false
+            if(this.nodeList.length === 0) {
+              firstNode = true
+            }
+            this.nodeList.push(new Node(this.idCount, [], firstNode, {x: event.clientX - boundaryEl.left, y: event.clientY - boundaryEl.top}, 
+              false))
+            this.idCount++
+            this.updateAdjacencyList()
           }
-          this.nodeList.push(new Node(this.idCount, [], firstNode, {x: event.clientX - boundaryEl.left, y: event.clientY - boundaryEl.top}, 
-            false))
-          this.idCount++
-          this.updateAdjacencyList()
         }
       }
     }
@@ -268,6 +323,10 @@ export class InteractiveGraphComponent implements OnInit {
     for(let i = 0; i < this.nodeList.length; i++) {
       this.loadInitialPosition(i)
     }
+  }
+
+  setIdCount(startingId: number) {
+    this.idCount = startingId
   }
 
   updateAdjacencyList(): void {

@@ -43,14 +43,9 @@
     transition: visibility 0.4s 0.2s, opacity 0.4s 0.2s linear;
   }
 
-  .node:hover:not(:active) > .node-options {
+  .node-hover:hover:not(:active) > .node-options {
     visibility: visible;
     opacity: 1;
-  }
-
-  .disable-node-hover:hover > .node-options {
-    visibility: hidden;
-    opacity: 0;
   }
 
   .connect-option {
@@ -90,6 +85,7 @@
     max-width: 100%;
     border: 3px ridge lightgray;
     border-radius: 10px;
+    background-color: #fff;
   }
 
   .connection-canvas {
@@ -97,7 +93,7 @@
   }
 
   .sim-buttons-container button{
-    margin: 0px 10px 10px 0;
+    margin: 40px 0px 20px 0px;
   }
 
   .active-sim-buttons {

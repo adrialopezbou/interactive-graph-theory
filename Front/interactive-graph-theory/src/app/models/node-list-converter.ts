@@ -35,13 +35,27 @@ export class NodeListConverter {
       }
     }
 
-    console.log({
-      n: n,
-      g: g,
-      visited: visited,
-      root: root
-    })
-
     return new AlgorithmProcessing(n, g, visited, root).processDfs()
+  }
+
+  public static transformToBfs(nodeList: Node[]): any {
+    let n: number = nodeList.length //Number of nodes in the graph
+    let g: Map<number, AdjacentListItem[]> = new Map() //Adjacent list
+    let visited: Map<number, boolean> = new Map() //Visited array
+    let root: number = null
+
+    for(let node of nodeList) {
+      let connections: AdjacentListItem[] = []
+      for(let cnt of node.connectionList) {
+        connections.push(new AdjacentListItem(cnt.id, 0))
+      }
+      g.set(node.id, connections)
+      visited.set(node.id, false)
+      if(node.isRoot) {
+        root = node.id
+      }
+    }
+
+    return new AlgorithmProcessing(n, g, visited, root).processBfs()
   }
 }

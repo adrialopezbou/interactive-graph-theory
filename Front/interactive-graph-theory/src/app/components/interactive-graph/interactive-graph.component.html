@@ -1,7 +1,7 @@
 <div class="sim-buttons-container">
-    <button *ngIf="!isPerformingSimulation" mat-raised-button color="primary" (click)="startSim()">Start Simulation</button>
+    <button *ngIf="!isPerformingSimulation" mat-raised-button color="primary" [disabled]="algthSelected === ''" (click)="startSim()">Start Simulation</button>
     <div class="active-sim-buttons" *ngIf="isPerformingSimulation">
-        <button mat-raised-button color="primary" style="font-size: 40px;" (click)="autoSim()">&#x025B8;</button>
+        <button mat-raised-button color="primary" style="font-size: 40px;" [disabled]="isPerformingAutoSim" (click)="autoSim()">&#x025B8;</button>
         <button mat-raised-button color="primary" style="font-size: 40px;" (click)="stopSim()">&#x025AA;</button>
         <button mat-raised-button color="primary" style="font-size: 30px;" (click)="previousStep()">&lt;</button>
         <button mat-raised-button color="primary" style="font-size: 30px;" (click)="nextStep()">&gt;</button>
@@ -13,7 +13,7 @@
 <div id="boundary" class="boundary" (mouseup)="onClickBoundary($event)">
     <!-- REVISAR DISABLE NODE HOVER, NO FUNCIONA! -->
     <div *ngFor="let node of nodeList; let i=index;" id="{{'node' + i}}" 
-    [ngClass]="{'node': true, 'disable-node-hover': nodeConnectionInfo.isConnectingNodes, 'disable-node-hover': isPerformingSimulation, 'root-node': node.isRoot, 
+    [ngClass]="{'node': true, 'root-node': node.isRoot, 'node-hover': !nodeConnectionInfo.isConnectingNodes && !isPerformingSimulation,
     'visited-node': nodeAnimationStatus[i] == 'visited', 'visiting-node': nodeAnimationStatus[i] == 'visiting'}"
     (mouseup)="onNodeMouseUp(i)"
     cdkDragBoundary=".boundary" cdkDrag (cdkDragMoved)="onDrag($event, i)" [cdkDragDisabled]="nodeConnectionInfo.isConnectingNodes">

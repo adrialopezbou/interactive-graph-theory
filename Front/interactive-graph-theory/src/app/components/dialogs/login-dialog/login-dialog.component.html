@@ -13,8 +13,8 @@
                 <mat-error *ngIf="passwordField.invalid && passwordField.touched">You must enter a password</mat-error>
             </mat-form-field>
             <div mat-dialog-actions>
+                <button mat-button [disabled]="form.invalid" (click)="onSubmit()">Log In</button>
             <button mat-button (click)="onNoClick()">Cancel</button>
-            <button mat-button [disabled]="form.invalid" (click)="onSubmit()">Log In</button>
             </div>
         </form>
     </div>

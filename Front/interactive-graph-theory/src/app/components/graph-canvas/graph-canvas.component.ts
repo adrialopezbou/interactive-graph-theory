@@ -58,8 +58,8 @@ export class GraphCanvasComponent implements OnInit {
     const canvasEl = this.canvasRef.nativeElement
     const canvasRect = canvasEl.getBoundingClientRect()
     const nodePos = {
-      x: this.nodeList[this.nodeConnectionInfo.index].currentPos.x,
-      y: this.nodeList[this.nodeConnectionInfo.index].currentPos.y
+      x: this.nodeList[this.nodeConnectionInfo.index].currentPos.x - 3, //Substracting panel radius
+      y: this.nodeList[this.nodeConnectionInfo.index].currentPos.y - 3
     }
     const prevPos = {
       x: res.clientX - canvasRect.left,
@@ -101,8 +101,8 @@ export class GraphCanvasComponent implements OnInit {
     this.ctx.lineWidth = 2
     this.ctx.lineCap = 'square'
     this.ctx.beginPath()
-    this.ctx.moveTo(start.x, start.y)
-    this.ctx.lineTo(end.x, end.y)
+    this.ctx.moveTo(start.x - 3, start.y - 3) //Substracting panel radius
+    this.ctx.lineTo(end.x - 3, end.y - 3)
     this.ctx.stroke()
     this.ctx.closePath()
   }
