@@ -24,7 +24,7 @@ export class GlobalConstants {
                         "endNode": 8
                     }
                 ],
-                "root": true,
+                "isRoot": true,
                 "ypos": 144,
                 "xpos": 189
             },
@@ -41,7 +41,7 @@ export class GlobalConstants {
                         "endNode": 8
                     }
                 ],
-                "root": false,
+                "isRoot": false,
                 "ypos": 351,
                 "xpos": 141
             },
@@ -58,7 +58,7 @@ export class GlobalConstants {
                         "endNode": 8
                     }
                 ],
-                "root": false,
+                "isRoot": false,
                 "ypos": 141,
                 "xpos": 400
             },
@@ -75,7 +75,7 @@ export class GlobalConstants {
                         "endNode": 8
                     }
                 ],
-                "root": false,
+                "isRoot": false,
                 "ypos": 526,
                 "xpos": 225
             },
@@ -92,7 +92,7 @@ export class GlobalConstants {
                         "endNode": 8
                     }
                 ],
-                "root": false,
+                "isRoot": false,
                 "ypos": 251,
                 "xpos": 627
             },
@@ -109,7 +109,7 @@ export class GlobalConstants {
                         "endNode": 8
                     }
                 ],
-                "root": false,
+                "isRoot": false,
                 "ypos": 595,
                 "xpos": 499
             },
@@ -126,7 +126,7 @@ export class GlobalConstants {
                         "endNode": 8
                     }
                 ],
-                "root": false,
+                "isRoot": false,
                 "ypos": 434,
                 "xpos": 678
             },
@@ -155,7 +155,7 @@ export class GlobalConstants {
                         "endNode": 1
                     }
                 ],
-                "root": false,
+                "isRoot": false,
                 "ypos": 344,
                 "xpos": 398
             }

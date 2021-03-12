@@ -1,7 +1,4 @@
-- Enable intro for the dialog submision
 - Add connection cost to database and use it when getting the graph
-- Try to use cookies to keep logged in even when refreshing the page
 - Improve visited array item disposition to fill more space responsively
-- Add queue animation to BFS
 - Maybe add iterative animation to DFS
 - Check auto sim, sometimes when changing fast from one simulation to another, the time between steps is drastically reduced

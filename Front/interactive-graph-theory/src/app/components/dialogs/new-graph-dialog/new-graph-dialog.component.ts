@@ -22,6 +22,11 @@ export class NewGraphDialogComponent implements OnInit {
     }) { }
 
   ngOnInit(): void {
+    this.dialogRef.keydownEvents().subscribe(event => {
+      if(event.key === "Enter") {
+        this.onSubmit()
+      }
+    })
   }
 
   onNoClick(): void {

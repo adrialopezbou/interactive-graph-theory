@@ -278,3 +278,18 @@ body .slick-next {
     background-color: #caf0f8;
     flex-grow: 1;
 }
+
+.user-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.user-info img {
+    width: 100%;
+    height: auto;
+    margin-top: -5px;
+}
+
+.icon-username-container {
+    display: flex;
+}

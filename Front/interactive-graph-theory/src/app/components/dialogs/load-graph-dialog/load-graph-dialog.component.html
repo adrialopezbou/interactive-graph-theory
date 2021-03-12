@@ -1,4 +1,5 @@
 <mat-action-list>
+  <mat-card-title>Graphs</mat-card-title>
   <div class="list-container" *ngFor="let graph of data.graphList; let i=index">
     <button class="graph-button" mat-list-item (click)="selectGraph(i)">{{graph.name}}</button>
     <button class="delete-button" mat-button (click)="deleteGraph(i)"><span>X</span></button>

@@ -32,6 +32,11 @@ export class SigninDialogComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.dialogRef.keydownEvents().subscribe(event => {
+      if(event.key === "Enter" && this.form.valid && this.passwordCompareField.value === this.passwordField.value) {
+        this.onSubmit()
+      }
+    })
   }
 
   onNoClick(): void {

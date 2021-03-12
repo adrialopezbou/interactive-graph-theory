@@ -16,10 +16,10 @@
                 <mat-label>Repeat the password</mat-label>
                 <input type="password" matInput formControlName="passwordCompare">
                 <mat-error *ngIf="passwordCompareField.hasError('required') && passwordCompareField.touched">You must enter a password</mat-error>
-                <mat-error *ngIf="passwordCompareField.value !== passwordField.value">The password doesn't match</mat-error>
             </mat-form-field>
+            <div class="mat-error pass-match-error" *ngIf="passwordCompareField.value !== passwordField.value">The password doesn't match</div>
             <div mat-dialog-actions>
-                <button mat-button [disabled]="form.invalid || passwordCompareField.value !== passwordField.value" (click)="onSubmit()">Log In</button>
+                <button mat-button [disabled]="form.invalid || passwordCompareField.value !== passwordField.value" (click)="onSubmit()">Sign In</button>
                 <button mat-button (click)="onNoClick()">Cancel</button>
             </div>
         </form>

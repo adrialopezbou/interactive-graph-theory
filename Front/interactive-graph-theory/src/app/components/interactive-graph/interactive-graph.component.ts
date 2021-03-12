@@ -180,6 +180,7 @@ export class InteractiveGraphComponent implements OnInit {
       }
     } else {
       this.autoSimulationEvent.emit(false)
+      this.isPerformingAutoSim = false
     }
   }
 
@@ -290,8 +291,9 @@ export class InteractiveGraphComponent implements OnInit {
     this.resetAnimation()
     let nodeList: Node[] = []
     let nodeMap = new Map<number, Node>()
+    this.idCount = 0
     for(let node of graph.nodes) {
-      let newNode = new Node(this.idCount, [], node.root, {x: node.xpos, y:node.ypos}, false)
+      let newNode = new Node(this.idCount, [], node.isRoot, {x: node.xpos, y:node.ypos}, false)
       nodeMap.set(node.id, newNode)
       this.idCount++
     }
@@ -305,6 +307,7 @@ export class InteractiveGraphComponent implements OnInit {
       nodeList.push(node)
     }
     this.nodeList = nodeList
+    console.log(this.nodeList)
   }
   
   resetAnimation() {

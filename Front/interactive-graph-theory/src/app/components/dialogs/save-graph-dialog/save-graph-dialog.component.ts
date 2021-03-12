@@ -24,6 +24,11 @@ export class SaveGraphDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dialogRef.keydownEvents().subscribe(event => {
+      if(event.key === "Enter" && this.form.valid) {
+        this.onSubmit()
+      }
+    })
   }
 
   onNoClick(): void {

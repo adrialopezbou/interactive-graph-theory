@@ -45,6 +45,7 @@ export class GraphCanvasComponent implements OnInit {
   }
 
 
+
   private render(): any {
     const canvasEl = this.canvasRef.nativeElement
     this.ctx = canvasEl.getContext('2d')

@@ -30,6 +30,11 @@ export class LoginDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dialogRef.keydownEvents().subscribe(event => {
+      if(event.key === "Enter" && this.form.valid) {
+        this.onSubmit()
+      }
+    })
   }
 
   onNoClick(): void {
@@ -39,9 +44,9 @@ export class LoginDialogComponent implements OnInit {
   onSubmit(): void {
     this.databaseService.authenticate(this.usernameField.value, this.passwordField.value).subscribe(result => {
       if(result !== null) {
-        this.databaseService.setUserJwt(result)
         this.data.username = this.usernameField.value
         this.data.password = this.passwordField.value
+        this.databaseService.setUserJwt(result, this.data.username)
         this.dialogRef.close(this.data)
       } else {
         alert('Username or password incorrect.')

@@ -67,12 +67,19 @@ export class MainComponent implements OnInit {
 
   configSelected = true //SEE IF THIS VARIABLE IS USEFUL
 
+  
+
   constructor(
     private readonly databaseService: DatabaseService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit(): void { 
+    let username = this.databaseService.checkIfLogged()
+    if(username !== null) {
+      this.username = username
+      this.logged = true
+    }
   }
 
   getGraph(id: number) {
@@ -110,6 +117,7 @@ export class MainComponent implements OnInit {
               this.username = result.username
               this.password = result.password
               this.logged = true
+              this.databaseService.setUserJwt(credentials, this.username)
               alert("User created successfully.")
             })
           } else {
@@ -268,8 +276,9 @@ export class MainComponent implements OnInit {
   }
 
   logOut(): void {
-    this.databaseService.setUserJwt('')
+    this.databaseService.logout()
     this.logged = false
+    this.username = ''
   }
 
   setQueueData(data: any): void{

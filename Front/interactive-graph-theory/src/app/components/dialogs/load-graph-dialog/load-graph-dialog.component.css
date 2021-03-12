@@ -7,16 +7,18 @@
 .graph-button {
     border-radius: 5px;
     border: 1px solid gray;
+    min-width: 200px;
 }
 
 .delete-button {
     display: flex;
     background-color:red;
-    border: 1px solid gray;
-    width: 35px!important;
+    border: 1px solid black;
+    width: 40px!important;
     min-width: unset!important;
-    height: 35px;
+    height: 40px;
     margin-left: 5px;
     border-radius: 5px;
     justify-content: center;
+    align-items: center;
 }
