@@ -2,3 +2,4 @@
 - Improve visited array item disposition to fill more space responsively
 - Maybe add iterative animation to DFS
 - Check auto sim, sometimes when changing fast from one simulation to another, the time between steps is drastically reduced
+- Check if delete graph button is correctly shown, maybe change font to white

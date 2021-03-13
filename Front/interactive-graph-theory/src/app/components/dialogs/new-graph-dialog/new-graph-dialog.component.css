@@ -17,3 +17,8 @@
 .param-container button {
     align-self: center;
 }
+
+.future-update-msg {
+    color: red;
+    font-size: 12px;
+}
