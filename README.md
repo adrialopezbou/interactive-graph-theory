@@ -4,7 +4,7 @@ This project is the first version of an interactive graph theory website where p
 ## Interactive Panel
 This panel allows the users to create their own graph in an easy and user-friendly way, just using the mouse to create new nodes, drag to move them around or create connections between them. While the user is creating a graph, its adjacency list (a way of representing graphs) will be displayed in real time.
 
-![alt text](http://url/to/img.png)
+![alt text](misc/pics/data_pic.png)
 
 ## Sign in / Log in
 Users are able to register directly from the website and they will be logged until they decide to log out or a significant amount of time has past.
