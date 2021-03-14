@@ -24,6 +24,7 @@ body .slick-next {
     flex-wrap: wrap;
     background-color: #caf0f8;
     border-top: 2px solid #ade8f4;
+    flex-grow: 1;
 } 
 
 .left-container{
@@ -275,8 +276,19 @@ body .slick-next {
 
 .footer-container {
     display: flex;
-    background-color: #caf0f8;
-    flex-grow: 1;
+    background-color: #90e0ef;
+    flex-shrink: 0;
+    justify-content: flex-end;
+    align-items: center;
+    height: 50px;
+    margin-top: 50px;
+    width: 100%;
+    align-self: flex-end;
+}
+
+.footer {
+    margin-right: 20px;
+    font-style: italic;
 }
 
 .user-icon {
@@ -292,4 +304,11 @@ body .slick-next {
 
 .icon-username-container {
     display: flex;
+}
+
+.main-footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 100%;
 }
