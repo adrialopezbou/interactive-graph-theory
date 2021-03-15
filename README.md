@@ -4,11 +4,11 @@ This project is the first version of an interactive graph theory website where p
 ## Instructions
 
 <ol>
-  <il>Use the sql scripts inside resources for both the nodes and user microservices to create the corresponding tables.</il>
-  <il>Change username and password in the application.properties file to use your MySql user</il>
-  <il>Run all four spring boot microservices: Eureka Server, Edge, User and Nodes</il>
-  <il>Run the angular project</il>
-  <il>Start learning about graphs!</il>
+  <li>Use the sql scripts inside resources for both the nodes and user microservices to create the corresponding tables.</li>
+  <li>Change username and password in the application.properties file to use your MySql user</li>
+  <li>Run all four spring boot microservices: Eureka Server, Edge, User and Nodes</li>
+  <li>Run the angular project</li>
+  <li>Start learning about graphs!</li>
 </ol>
 
 ## Interactive Panel
