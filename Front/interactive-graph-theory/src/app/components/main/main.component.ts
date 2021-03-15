@@ -29,15 +29,6 @@ export class MainComponent implements OnInit {
 
   algthSelected = 'dfs'
 
-  /* slides = [
-    {img: "https://via.placeholder.com/600.png/09f/fff"},
-    {img: "https://via.placeholder.com/600.png/021/fff"},
-    {img: "https://via.placeholder.com/600.png/321/fff"},
-    {img: "https://via.placeholder.com/600.png/422/fff"},
-    {img: "https://via.placeholder.com/600.png/654/fff"}
-  ];
-  slideConfig = {"slidesToShow": 4, "slidesToScroll": 4}; */
-
   graphName: string = ''
 
   graphList = []
@@ -246,10 +237,7 @@ export class MainComponent implements OnInit {
     if(enqueue) {
       this.bfsQueueCurrentList.push(id)
     } else {
-      console.log(this.bfsQueueCurrentList)
-      console.log(id)
       this.bfsQueueCurrentList = this.bfsQueueCurrentList.filter(value => value !== id)
-      console.log(this.bfsQueueCurrentList)
     }
   }
 
@@ -288,29 +276,5 @@ export class MainComponent implements OnInit {
   setAutoSimulation(data: any): void {
     this.isPerformingAutoSim = data
   }
-  
-  /* addSlide() {
-    this.slides.push({img: "http://placehold.it/350x150/777777"})
-  }
-  
-  removeSlide() {
-    this.slides.length = this.slides.length - 1;
-  }
-  
-  slickInit(e) {
-    console.log('slick initialized');
-  }
-  
-  breakpoint(e) {
-    console.log('breakpoint');
-  }
-  
-  afterChange(e) {
-    console.log('afterChange');
-  }
-  
-  beforeChange(e) {
-    console.log('beforeChange');
-  } */  
 
 }

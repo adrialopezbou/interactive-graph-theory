@@ -11,7 +11,6 @@
 </div>
 
 <div id="boundary" class="boundary" (mouseup)="onClickBoundary($event)">
-    <!-- REVISAR DISABLE NODE HOVER, NO FUNCIONA! -->
     <div *ngFor="let node of nodeList; let i=index;" id="{{'node' + i}}" 
     [ngClass]="{'node': true, 'root-node': node.isRoot, 'node-hover': !nodeConnectionInfo.isConnectingNodes && !isPerformingSimulation,
     'visited-node': nodeAnimationStatus[i] == 'visited', 'visiting-node': nodeAnimationStatus[i] == 'visiting'}"

@@ -38,7 +38,7 @@ export class InteractiveGraphComponent implements OnInit {
   algthSelected: string
 
   @Output()
-  adjacencyListEvent = new EventEmitter()
+  adjacencyListEvent = new EventEmitter(true)
 
   @Output()
   visitedArrayEvent = new EventEmitter()
@@ -69,25 +69,29 @@ export class InteractiveGraphComponent implements OnInit {
   }
 
   startSim(): void {
-    this.isPerformingSimulation = true
-    switch(this.algthSelected) {
-      case 'dfs': {
-        this.nodeAnimationOrder = NodeListConverter.transformToDfs(this.nodeList)
-        break
+    if(!this.checkIfAnyRoot()) {
+      alert("Please, select a root node to start the simulation")
+    } else {
+      this.isPerformingSimulation = true
+      switch(this.algthSelected) {
+        case 'dfs': {
+          this.nodeAnimationOrder = NodeListConverter.transformToDfs(this.nodeList)
+          break
+        }
+        case 'bfs': {
+          let result = NodeListConverter.transformToBfs(this.nodeList)
+          this.nodeAnimationOrder = result.nodeOrder
+          this.bfsQueueDataEvent.emit(result.queueOrder)
+          break
+        }
       }
-      case 'bfs': {
-        let result = NodeListConverter.transformToBfs(this.nodeList)
-        this.nodeAnimationOrder = result.nodeOrder
-        console.log(result)
-        this.bfsQueueDataEvent.emit(result.queueOrder)
-        break
-      }
+      this.nodeAnimationStatus = new Array(this.nodeList.length).fill('')
+      let id = this.nodeAnimationOrder[this.animationStep]
+      let index = this.findNodeIndexById(id, this.nodeList)
+      this.nodeAnimationStatus[index] = 'visiting'
+      this.visitedArrayEvent.emit(index)
     }
-    this.nodeAnimationStatus = new Array(this.nodeList.length).fill('')
-    let id = this.nodeAnimationOrder[this.animationStep]
-    let index = this.findNodeIndexById(id, this.nodeList)
-    this.nodeAnimationStatus[index] = 'visiting'
-    this.visitedArrayEvent.emit(index)
+    
   }
 
   autoSim(): void {
@@ -99,7 +103,9 @@ export class InteractiveGraphComponent implements OnInit {
     this.nodeAnimationStatus[index] = 'visiting'
     this.simulationStoppedEvent.emit()
     this.visitedArrayEvent.emit(index)
-    this.bfsQueueUpdateEvent.emit(0)
+    if(this.algthSelected === 'bfs') {
+      this.bfsQueueUpdateEvent.emit(0)
+    }
     this.autoSimulationEvent.emit(true);
 
     (async () => {
@@ -270,6 +276,15 @@ export class InteractiveGraphComponent implements OnInit {
     this.nodeList[index].isRoot = true
   }
 
+  checkIfAnyRoot(): boolean {
+    for(let node of this.nodeList) {
+      if(node.isRoot) {
+        return true
+      }
+    }
+    return false
+  }
+
   deleteNode(index: number): void {
     for(let i of this.nodeList[index].connectionList) {
       i.connectionList = i.connectionList.filter(node => 
@@ -307,7 +322,6 @@ export class InteractiveGraphComponent implements OnInit {
       nodeList.push(node)
     }
     this.nodeList = nodeList
-    console.log(this.nodeList)
   }
   
   resetAnimation() {
