@@ -2,7 +2,14 @@
 This project is the first version of an interactive graph theory website where people with no previous knowledge about graph theory can learn how a graph is structured and about its related listing, finding, sorting algorithms through real-time animated simulations.
 
 ## Instructions
-In order to enable all project functionalities, use
+
+<ol>
+  <il>Use the sql scripts inside resources for both the nodes and user microservices to create the corresponding tables.</il>
+  <il>Change username and password in the application.properties file to use your MySql user</il>
+  <il>Run all four spring boot microservices: Eureka Server, Edge, User and Nodes</il>
+  <il>Run the angular project</il>
+  <il>Start learning about graphs!</il>
+</ol>
 
 ## Interactive Panel
 This panel allows the users to create their own graph in an easy and user-friendly way, just using the mouse to create new nodes, drag to move them around or create connections between them. While the user is creating a graph, its adjacency list (a way of representing graphs) will be displayed in real time.
