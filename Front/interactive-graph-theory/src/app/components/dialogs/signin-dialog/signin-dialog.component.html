@@ -1,5 +1,5 @@
 <div class="dialog-container">
-    <h1 mat-dialog-title>Sign In</h1>
+    <h1 mat-dialog-title>Sign Up</h1>
     <div mat-dialog-content class="content-container">
         <form class="form" [formGroup]="form" >
             <mat-form-field>
@@ -19,7 +19,7 @@
             </mat-form-field>
             <div class="mat-error pass-match-error" *ngIf="passwordCompareField.value !== passwordField.value">The password doesn't match</div>
             <div mat-dialog-actions>
-                <button mat-button [disabled]="form.invalid || passwordCompareField.value !== passwordField.value" (click)="onSubmit()">Sign In</button>
+                <button mat-button [disabled]="form.invalid || passwordCompareField.value !== passwordField.value" (click)="onSubmit()">Sign Up</button>
                 <button mat-button (click)="onNoClick()">Cancel</button>
             </div>
         </form>
