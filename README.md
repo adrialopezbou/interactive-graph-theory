@@ -8,7 +8,7 @@ This project is the first version of an interactive graph theory website where p
   <li>Change username and password in the application.properties file to use your MySql user</li>
   <li>Run all four spring boot microservices: Eureka Server, Edge, User and Nodes</li>
   <li>Run the angular project</li>
-  <li>Start learning about graphs!</li>
+  <li>Start learning about graphs on http://localhost:4200!</li>
 </ol>
 
 ## Interactive Panel
